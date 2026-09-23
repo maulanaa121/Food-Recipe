@@ -70,17 +70,26 @@ const Navbar = () => {
                         </div>
 
                         {/* ================= MOBILE BUTTON ================= */}
-                        <button
-                            onClick={() => setIsOpen(!isOpen)}
-                            className="text-white md:hidden"
-                            aria-label="Menu"
-                        >
-                            {isOpen ? (
-                                <X size={30} />
-                            ) : (
-                                <Menu size={30} />
-                            )}
-                        </button>
+<button
+    onClick={() => setIsOpen(!isOpen)}
+    className="flex h-10 w-10 flex-col items-end justify-center gap-[5px] md:hidden"
+    aria-label="Menu"
+>
+    {isOpen ? (
+        <X size={30} className="text-white" />
+    ) : (
+        <>
+            {/* 40% */}
+            <span className="block h-[2px] w-[12px] rounded-full bg-white"></span>
+
+            {/* 60% */}
+            <span className="block h-[2px] w-[18px] rounded-full bg-white"></span>
+
+            {/* 40% */}
+            <span className="block h-[2px] w-[14px] rounded-full bg-white"></span>
+        </>
+    )}
+</button>
                     </div>
 
                     {/* ================= MOBILE MENU ================= */}
