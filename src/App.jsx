@@ -10,6 +10,7 @@ function App() {
   return (
     <>
       <h1 className='text-6xl text-red-400 font-itim'>Testing</h1>
+      <h2 className='font-poppins'>Tes Poppins</h2>
     </>
   )
 }
