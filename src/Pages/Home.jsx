@@ -1,10 +1,11 @@
 import React from 'react'
+import Navbar from '../Partials/Navbar'
 
 const Home = () => {
   return (
-    <div>
-        <h1 className='font-poppins'>hajsha</h1>
-    </div>
+    <>
+      <Navbar/>
+    </>
   )
 }
 
