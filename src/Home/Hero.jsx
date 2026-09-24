@@ -69,7 +69,7 @@ const Hero = () => {
                         Website resep makanan yang menghadirkan berbagai kreasi
                         masakan lezat, mudah diikuti, dan cocok untuk semua
                         kalangan. Temukan inspirasi memasak setiap hari dengan
-                        panduan lengkap dan langkah yang jelas.
+                        panduan lengkap dan langkah yang pasti.
                     </p>
 
                 </div>
