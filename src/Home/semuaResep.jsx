@@ -11,43 +11,67 @@ const SemuaResep = () => {
     const resep = [
         {
             name: "Mie Goreng",
-            image: "https://images.unsplash.com/photo-1585032226651-759b368d7246?auto=format&fit=crop&w=600&q=80",
+            image:
+                "https://images.unsplash.com/photo-1585032226651-759b368d7246?auto=format&fit=crop&w=600&q=80",
             time: "15 min",
         },
         {
             name: "Nasi Goreng",
-            image: "https://images.unsplash.com/photo-1603133872878-684f208fb84b?auto=format&fit=crop&w=600&q=80",
+            image:
+                "https://images.unsplash.com/photo-1603133872878-684f208fb84b?auto=format&fit=crop&w=600&q=80",
             time: "20 min",
         },
         {
             name: "Mie Rebus",
-            image: "https://images.unsplash.com/photo-1552611052-33e04de081de?auto=format&fit=crop&w=600&q=80",
+            image:
+                "https://images.unsplash.com/photo-1552611052-33e04de081de?auto=format&fit=crop&w=600&q=80",
             time: "15 min",
         },
         {
-            name: "Mie Goreng",
-            image: "https://images.unsplash.com/photo-1585032226651-759b368d7246?auto=format&fit=crop&w=600&q=80",
-            time: "15 min",
+            name: "Ayam Bakar",
+            image:
+                "https://images.unsplash.com/photo-1532550907401-a500c9a57435?auto=format&fit=crop&w=600&q=80",
+            time: "45 min",
         },
         {
-            name: "Nasi Goreng",
-            image: "https://images.unsplash.com/photo-1603133872878-684f208fb84b?auto=format&fit=crop&w=600&q=80",
-            time: "20 min",
+            name: "Sate Ayam",
+            image:
+                "https://images.unsplash.com/photo-1529563021893-cc83c992d75d?auto=format&fit=crop&w=600&q=80",
+            time: "30 min",
         },
         {
-            name: "Mie Rebus",
-            image: "https://images.unsplash.com/photo-1552611052-33e04de081de?auto=format&fit=crop&w=600&q=80",
-            time: "15 min",
+            name: "Rendang",
+            image:
+                "https://images.unsplash.com/photo-1601050690117-94f5f6fa8bd7?auto=format&fit=crop&w=600&q=80",
+            time: "90 min",
+        },
+        {
+            name: "Gado-Gado",
+            image:
+                "https://images.unsplash.com/photo-1547592180-85f173990554?auto=format&fit=crop&w=600&q=80",
+            time: "25 min",
+        },
+        {
+            name: "Bakso",
+            image:
+                "https://images.unsplash.com/photo-1563245372-f21724e3856d?auto=format&fit=crop&w=600&q=80",
+            time: "30 min",
+        },
+        {
+            name: "Soto Ayam",
+            image:
+                "https://images.unsplash.com/photo-1515003197210-e0cd71810b5f?auto=format&fit=crop&w=600&q=80",
+            time: "35 min",
         },
     ];
 
     return (
-        <section className="relative w-full overflow-hidden bg-white">
+        <section className="relative w-full overflow-hidden bg-white -mt-2.5">
 
             {/* =====================================================
                 WAVE ATAS
             ===================================================== */}
-            <div className="absolute top-0 left-0 z-10 w-full overflow-hidden leading-[0]">
+            <div className="absolute left-0 top-0 z-10 w-full overflow-hidden leading-[0]">
                 <img
                     src={WaveGreen}
                     alt=""
@@ -95,8 +119,8 @@ const SemuaResep = () => {
                                 shadow-sm
                                 transition
                                 duration-300
-                                hover:bg-[#8fc43f]
                                 hover:-translate-y-0.5
+                                hover:bg-[#8fc43f]
                             "
                         >
                             Semua Resep
@@ -173,8 +197,8 @@ const SemuaResep = () => {
                                 text-[#303030]
                                 transition
                                 duration-300
-                                hover:bg-[#9ACD50]
                                 hover:-translate-y-0.5
+                                hover:bg-[#9ACD50]
                             "
                         >
                             <span>
@@ -351,6 +375,7 @@ const RecipeCard = ({ item }) => {
                     <span className="text-[15px]">
                         ›
                     </span>
+
                 </button>
 
             </div>
