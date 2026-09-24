@@ -3,7 +3,7 @@ import WaveGreen from "../Assets/image/Vector.svg";
 
 const Hero = () => {
     return (
-        <section className="relative min-h-screen w-full overflow-hidden">
+        <section id="beranda" className="relative min-h-screen w-full overflow-hidden">
 
             {/* ================= BACKGROUND ================= */}
             <div

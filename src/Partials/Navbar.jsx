@@ -8,15 +8,15 @@ const Navbar = () => {
     const menu = [
         {
             name: "Beranda",
-            href: "/",
+            href: "#beranda",
         },
         {
             name: "Semua Resep",
-            href: "/resep",
+            href: "#semua-resep",
         },
         {
             name: "Ulasan",
-            href: "/ulasan",
+            href: "#ulasan",
         },
         {
             name: "Login",

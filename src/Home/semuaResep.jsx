@@ -66,7 +66,7 @@ const SemuaResep = () => {
     ];
 
     return (
-        <section className="relative w-full overflow-hidden bg-white -mt-2.5">
+        <section id="semua-resep" className="relative w-full overflow-hidden bg-white -mt-2.5">
 
             {/* =====================================================
                 WAVE ATAS

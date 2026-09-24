@@ -137,7 +137,7 @@ const Ulasan = () => {
     // =====================================================
 
     return (
-        <section className="relative -mt-2.5 w-full overflow-hidden bg-white">
+        <section id="ulasan" className="relative -mt-2.5 w-full overflow-hidden bg-white">
 
             {/* =================================================
                 WAVE ATAS
