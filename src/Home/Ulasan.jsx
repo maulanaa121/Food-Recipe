@@ -348,16 +348,7 @@ const Ulasan = () => {
                 </div>
             </div>
 
-            {/* =================================================
-                WAVE BAWAH
-            ================================================= */}
-            <div className="absolute bottom-0 left-0 z-10 w-full overflow-hidden leading-[0]">
-                <img
-                    src={WaveGreen}
-                    alt=""
-                    className="block w-full scale-y-[-1] -scale-x-100"
-                />
-            </div>
+            
 
         </section>
     );

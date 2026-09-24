@@ -3,6 +3,7 @@ import Navbar from '../Partials/Navbar'
 import Hero from '../Home/Hero'
 import Ulasan from '../Home/Ulasan'
 import SemuaResep from '../Home/semuaResep'
+import Footer from '../Partials/Footer'
 
 const Home = () => {
   return (
@@ -11,6 +12,7 @@ const Home = () => {
       <Hero/>
       <SemuaResep/>
       <Ulasan/>
+      <Footer/>
     </>
   )
 }
