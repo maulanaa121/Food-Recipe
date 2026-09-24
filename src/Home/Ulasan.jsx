@@ -1,8 +1,13 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import WaveGreen from "../Assets/image/Vector-2.svg";
 
 const Ulasan = () => {
     const [activePage, setActivePage] = useState(0);
+    const [dragOffset, setDragOffset] = useState(0);
+    const [isDragging, setIsDragging] = useState(false);
+
+    const startX = useRef(0);
+    const currentX = useRef(0);
 
     const ulasan = [
         {
@@ -23,7 +28,6 @@ const Ulasan = () => {
             review:
                 "Suka banget! Tampilan websitenya simpel, dan fitur favoritnya berguna untuk menyimpan resep yang ingin saya coba.",
         },
-
         {
             name: "Michael",
             image: "https://i.pravatar.cc/150?img=11",
@@ -42,7 +46,6 @@ const Ulasan = () => {
             review:
                 "Website resep yang praktis. Saya suka karena langkah memasaknya dijelaskan dengan jelas.",
         },
-
         {
             name: "Olivia",
             image: "https://i.pravatar.cc/150?img=49",
@@ -63,6 +66,63 @@ const Ulasan = () => {
         },
     ];
 
+    const totalPages = 3;
+
+    // =========================
+    // DRAG START
+    // =========================
+    const handlePointerDown = (e) => {
+        startX.current = e.clientX;
+        currentX.current = e.clientX;
+
+        setIsDragging(true);
+    };
+
+    // =========================
+    // DRAG MOVE
+    // =========================
+    const handlePointerMove = (e) => {
+        if (!isDragging) return;
+
+        currentX.current = e.clientX;
+
+        const diff = currentX.current - startX.current;
+
+        // Membatasi drag supaya tidak terlalu jauh
+        setDragOffset(diff * 0.7);
+    };
+
+    // =========================
+    // DRAG END
+    // =========================
+    const handlePointerUp = () => {
+        if (!isDragging) return;
+
+        const diff = currentX.current - startX.current;
+
+        // Jika geser lebih dari 80px
+        if (Math.abs(diff) > 80) {
+
+            // Geser ke kanan
+            if (diff > 0 && activePage > 0) {
+                setActivePage((prev) => prev - 1);
+            }
+
+            // Geser ke kiri
+            if (diff < 0 && activePage < totalPages - 1) {
+                setActivePage((prev) => prev + 1);
+            }
+        }
+
+        setDragOffset(0);
+        setIsDragging(false);
+    };
+
+    const handlePointerCancel = () => {
+        setDragOffset(0);
+        setIsDragging(false);
+    };
+
     return (
         <section className="relative -mt-2.5 w-full overflow-hidden bg-white">
 
@@ -76,8 +136,21 @@ const Ulasan = () => {
             </div>
 
             {/* ================= CONTENT ================= */}
-            <div className="relative z-20 px-5 pb-[170px] pt-[210px] sm:px-8 sm:pb-[190px] sm:pt-[230px] md:px-12 md:pb-[210px] md:pt-[250px]">
-
+            <div
+                className="
+                    relative
+                    z-20
+                    px-5
+                    pb-[170px]
+                    pt-[210px]
+                    sm:px-8
+                    sm:pb-[190px]
+                    sm:pt-[230px]
+                    md:px-12
+                    md:pb-[210px]
+                    md:pt-[250px]
+                "
+            >
                 <div className="mx-auto max-w-[1100px]">
 
                     {/* ================= HEADING ================= */}
@@ -94,17 +167,31 @@ const Ulasan = () => {
                     </div>
 
                     {/* ================= CAROUSEL ================= */}
-                    <div className="overflow-hidden">
+                    <div
+                        className={`
+                            overflow-hidden
+                            py-3
+                            ${isDragging ? "cursor-grabbing" : "cursor-grab"}
+                        `}
+                        onPointerDown={handlePointerDown}
+                        onPointerMove={handlePointerMove}
+                        onPointerUp={handlePointerUp}
+                        onPointerCancel={handlePointerCancel}
+                        onPointerLeave={handlePointerUp}
+                    >
 
                         <div
-                            className="flex transition-transform duration-500 ease-in-out"
+                            className={`
+                                flex
+                                ${isDragging ? "" : "transition-transform duration-500 ease-in-out"}
+                            `}
                             style={{
-                                transform: `translateX(-${activePage * 100}%)`,
+                                transform: `translateX(calc(-${activePage * 100 / totalPages}% + ${dragOffset}px))`,
                             }}
                         >
 
-                            {/* PAGE 1 */}
-                            <div className="grid min-w-full grid-cols-1 gap-7 md:grid-cols-3">
+                            {/* ================= PAGE 1 ================= */}
+                            <div className="grid w-full shrink-0 grid-cols-1 gap-7 md:grid-cols-3">
                                 {ulasan.slice(0, 3).map((item) => (
                                     <TestimonialCard
                                         key={item.name}
@@ -113,8 +200,8 @@ const Ulasan = () => {
                                 ))}
                             </div>
 
-                            {/* PAGE 2 */}
-                            <div className="grid min-w-full grid-cols-1 gap-7 md:grid-cols-3">
+                            {/* ================= PAGE 2 ================= */}
+                            <div className="grid w-full shrink-0 grid-cols-1 gap-7 md:grid-cols-3">
                                 {ulasan.slice(3, 6).map((item) => (
                                     <TestimonialCard
                                         key={item.name}
@@ -123,8 +210,8 @@ const Ulasan = () => {
                                 ))}
                             </div>
 
-                            {/* PAGE 3 */}
-                            <div className="grid min-w-full grid-cols-1 gap-7 md:grid-cols-3">
+                            {/* ================= PAGE 3 ================= */}
+                            <div className="grid w-full shrink-0 grid-cols-1 gap-7 md:grid-cols-3">
                                 {ulasan.slice(6, 9).map((item) => (
                                     <TestimonialCard
                                         key={item.name}
@@ -144,7 +231,10 @@ const Ulasan = () => {
                             <button
                                 key={index}
                                 type="button"
-                                onClick={() => setActivePage(index)}
+                                onClick={() => {
+                                    setActivePage(index);
+                                    setDragOffset(0);
+                                }}
                                 aria-label={`Ulasan halaman ${index + 1}`}
                                 className={`
                                     h-[16px]
@@ -181,12 +271,15 @@ const Ulasan = () => {
 };
 
 
-/* ================= TESTIMONIAL CARD ================= */
+/* =====================================================
+   TESTIMONIAL CARD
+===================================================== */
 
 const TestimonialCard = ({ item }) => {
     return (
         <div
             className="
+                mx-1
                 flex
                 min-h-[300px]
                 flex-col
@@ -208,9 +301,11 @@ const TestimonialCard = ({ item }) => {
             <img
                 src={item.image}
                 alt={item.name}
+                draggable="false"
                 className="
                     h-[70px]
                     w-[70px]
+                    select-none
                     rounded-full
                     border-[2px]
                     border-[#72C000]
