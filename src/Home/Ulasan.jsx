@@ -68,19 +68,19 @@ const Ulasan = () => {
 
     const totalPages = 3;
 
-    // =========================
-    // DRAG START
-    // =========================
+    // =====================================================
+    // DRAG / SWIPE
+    // =====================================================
+
     const handlePointerDown = (e) => {
         startX.current = e.clientX;
         currentX.current = e.clientX;
 
         setIsDragging(true);
+
+        e.currentTarget.setPointerCapture(e.pointerId);
     };
 
-    // =========================
-    // DRAG MOVE
-    // =========================
     const handlePointerMove = (e) => {
         if (!isDragging) return;
 
@@ -88,45 +88,60 @@ const Ulasan = () => {
 
         const diff = currentX.current - startX.current;
 
-        // Membatasi drag supaya tidak terlalu jauh
+        // Membatasi pergerakan saat drag
         setDragOffset(diff * 0.7);
     };
 
-    // =========================
-    // DRAG END
-    // =========================
-    const handlePointerUp = () => {
+    const handlePointerUp = (e) => {
         if (!isDragging) return;
 
         const diff = currentX.current - startX.current;
 
-        // Jika geser lebih dari 80px
+        // Minimal jarak swipe
         if (Math.abs(diff) > 80) {
 
-            // Geser ke kanan
-            if (diff > 0 && activePage > 0) {
-                setActivePage((prev) => prev - 1);
-            }
-
-            // Geser ke kiri
+            // Swipe ke kiri
             if (diff < 0 && activePage < totalPages - 1) {
                 setActivePage((prev) => prev + 1);
+            }
+
+            // Swipe ke kanan
+            if (diff > 0 && activePage > 0) {
+                setActivePage((prev) => prev - 1);
             }
         }
 
         setDragOffset(0);
         setIsDragging(false);
+
+        try {
+            e.currentTarget.releasePointerCapture(e.pointerId);
+        } catch {
+            // Tidak melakukan apa-apa
+        }
     };
 
-    const handlePointerCancel = () => {
+    const handlePointerCancel = (e) => {
         setDragOffset(0);
         setIsDragging(false);
+
+        try {
+            e.currentTarget.releasePointerCapture(e.pointerId);
+        } catch {
+            // Tidak melakukan apa-apa
+        }
     };
+
+    // =====================================================
+    // RENDER
+    // =====================================================
 
     return (
         <section className="relative -mt-2.5 w-full overflow-hidden bg-white">
 
-            {/* ================= WAVE ATAS ================= */}
+            {/* =================================================
+                WAVE ATAS
+            ================================================= */}
             <div className="absolute top-0 left-0 z-10 w-full overflow-hidden leading-[0]">
                 <img
                     src={WaveGreen}
@@ -135,7 +150,9 @@ const Ulasan = () => {
                 />
             </div>
 
-            {/* ================= CONTENT ================= */}
+            {/* =================================================
+                CONTENT
+            ================================================= */}
             <div
                 className="
                     relative
@@ -153,45 +170,96 @@ const Ulasan = () => {
             >
                 <div className="mx-auto max-w-[1100px]">
 
-                    {/* ================= HEADING ================= */}
+                    {/* =================================================
+                        HEADING
+                    ================================================= */}
                     <div className="mb-10 text-left sm:mb-12">
 
-                        <h2 className="font-itim text-[38px] leading-none text-[#3f3f3f] sm:text-[44px] md:text-[52px]">
+                        <h2
+                            className="
+                                font-itim
+                                text-[38px]
+                                leading-none
+                                text-[#3f3f3f]
+                                sm:text-[44px]
+                                md:text-[52px]
+                            "
+                        >
                             Ulasan Kami
                         </h2>
 
-                        <p className="mt-3 font-itim text-[18px] text-black sm:text-[20px] md:text-[22px]">
+                        <p
+                            className="
+                                mt-3
+                                font-itim
+                                text-[18px]
+                                text-black
+                                sm:text-[20px]
+                                md:text-[22px]
+                            "
+                        >
                             Kumpulan ulasan jujur dari para pengguna kami
                         </p>
 
                     </div>
 
-                    {/* ================= CAROUSEL ================= */}
+                    {/* =================================================
+                        CAROUSEL
+                    ================================================= */}
                     <div
                         className={`
+                            w-full
                             overflow-hidden
                             py-3
-                            ${isDragging ? "cursor-grabbing" : "cursor-grab"}
+                            select-none
+                            touch-pan-y
+                            ${
+                                isDragging
+                                    ? "cursor-grabbing"
+                                    : "cursor-grab"
+                            }
                         `}
                         onPointerDown={handlePointerDown}
                         onPointerMove={handlePointerMove}
                         onPointerUp={handlePointerUp}
                         onPointerCancel={handlePointerCancel}
-                        onPointerLeave={handlePointerUp}
                     >
 
                         <div
                             className={`
                                 flex
-                                ${isDragging ? "" : "transition-transform duration-500 ease-in-out"}
+                                w-full
+                                ${
+                                    isDragging
+                                        ? ""
+                                        : "transition-transform duration-500 ease-in-out"
+                                }
                             `}
                             style={{
-                                transform: `translateX(calc(-${activePage * 100 / totalPages}% + ${dragOffset}px))`,
+                                transform: `
+                                    translateX(
+                                        calc(
+                                            -${activePage * 100}%
+                                            + ${dragOffset}px
+                                        )
+                                    )
+                                `,
                             }}
                         >
 
-                            {/* ================= PAGE 1 ================= */}
-                            <div className="grid w-full shrink-0 grid-cols-1 gap-7 md:grid-cols-3">
+                            {/* =================================================
+                                PAGE 1
+                            ================================================= */}
+                            <div
+                                className="
+                                    grid
+                                    w-full
+                                    shrink-0
+                                    grid-cols-1
+                                    gap-7
+                                    md:grid-cols-3
+                                "
+                            >
                                 {ulasan.slice(0, 3).map((item) => (
                                     <TestimonialCard
                                         key={item.name}
@@ -200,8 +268,19 @@ const Ulasan = () => {
                                 ))}
                             </div>
 
-                            {/* ================= PAGE 2 ================= */}
-                            <div className="grid w-full shrink-0 grid-cols-1 gap-7 md:grid-cols-3">
+                            {/* =================================================
+                                PAGE 2
+                            ================================================= */}
+                            <div
+                                className="
+                                    grid
+                                    w-full
+                                    shrink-0
+                                    grid-cols-1
+                                    gap-7
+                                    md:grid-cols-3
+                                "
+                            >
                                 {ulasan.slice(3, 6).map((item) => (
                                     <TestimonialCard
                                         key={item.name}
@@ -210,8 +289,19 @@ const Ulasan = () => {
                                 ))}
                             </div>
 
-                            {/* ================= PAGE 3 ================= */}
-                            <div className="grid w-full shrink-0 grid-cols-1 gap-7 md:grid-cols-3">
+                            {/* =================================================
+                                PAGE 3
+                            ================================================= */}
+                            <div
+                                className="
+                                    grid
+                                    w-full
+                                    shrink-0
+                                    grid-cols-1
+                                    gap-7
+                                    md:grid-cols-3
+                                "
+                            >
                                 {ulasan.slice(6, 9).map((item) => (
                                     <TestimonialCard
                                         key={item.name}
@@ -224,7 +314,9 @@ const Ulasan = () => {
 
                     </div>
 
-                    {/* ================= DOTS ================= */}
+                    {/* =================================================
+                        DOTS
+                    ================================================= */}
                     <div className="mt-8 flex items-center justify-center gap-5">
 
                         {[0, 1, 2].map((index) => (
@@ -249,7 +341,6 @@ const Ulasan = () => {
                                     }
                                 `}
                             />
-
                         ))}
 
                     </div>
@@ -257,7 +348,9 @@ const Ulasan = () => {
                 </div>
             </div>
 
-            {/* ================= WAVE BAWAH ================= */}
+            {/* =================================================
+                WAVE BAWAH
+            ================================================= */}
             <div className="absolute bottom-0 left-0 z-10 w-full overflow-hidden leading-[0]">
                 <img
                     src={WaveGreen}
@@ -271,9 +364,9 @@ const Ulasan = () => {
 };
 
 
-/* =====================================================
+/* =============================================================
    TESTIMONIAL CARD
-===================================================== */
+============================================================= */
 
 const TestimonialCard = ({ item }) => {
     return (
@@ -282,6 +375,7 @@ const TestimonialCard = ({ item }) => {
                 mx-1
                 flex
                 min-h-[300px]
+                w-auto
                 flex-col
                 items-center
                 justify-start
@@ -297,7 +391,9 @@ const TestimonialCard = ({ item }) => {
             "
         >
 
-            {/* FOTO */}
+            {/* =================================================
+                FOTO
+            ================================================= */}
             <img
                 src={item.image}
                 alt={item.name}
@@ -305,6 +401,7 @@ const TestimonialCard = ({ item }) => {
                 className="
                     h-[70px]
                     w-[70px]
+                    shrink-0
                     select-none
                     rounded-full
                     border-[2px]
@@ -313,25 +410,53 @@ const TestimonialCard = ({ item }) => {
                 "
             />
 
-            {/* NAMA */}
-            <h3 className="mt-3 font-itim text-[21px] text-[#3f3f3f]">
+            {/* =================================================
+                NAMA
+            ================================================= */}
+            <h3
+                className="
+                    mt-3
+                    font-itim
+                    text-[21px]
+                    text-[#3f3f3f]
+                "
+            >
                 {item.name}
             </h3>
 
-            {/* BINTANG */}
+            {/* =================================================
+                BINTANG
+            ================================================= */}
             <div className="mt-1 flex items-center justify-center gap-1">
+
                 {[1, 2, 3, 4, 5].map((star) => (
                     <span
                         key={star}
-                        className="text-[21px] leading-none text-[#F2D82E]"
+                        className="
+                            text-[21px]
+                            leading-none
+                            text-[#F2D82E]
+                        "
                     >
                         ★
                     </span>
                 ))}
+
             </div>
 
-            {/* REVIEW */}
-            <p className="mt-4 max-w-[280px] font-itim text-[14px] leading-[1.4] text-[#4a4a4a]">
+            {/* =================================================
+                REVIEW
+            ================================================= */}
+            <p
+                className="
+                    mt-4
+                    max-w-[280px]
+                    font-itim
+                    text-[14px]
+                    leading-[1.4]
+                    text-[#4a4a4a]
+                "
+            >
                 {item.review}
             </p>
 
