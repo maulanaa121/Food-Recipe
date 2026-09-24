@@ -13,29 +13,63 @@ const Hero = () => {
                 }}
             />
 
-            {/* ================= DARK OVERLAY ================= */}
-            <div className="absolute inset-0 bg-black/45" />
+            {/* ================= OVERLAY ================= */}
+            <div className="absolute inset-0 bg-black/68" />
 
             {/* ================= CONTENT ================= */}
-            <div className="relative z-10 flex min-h-screen items-center justify-center px-5 pb-20">
-                <div className="w-full max-w-[700px] text-center text-white">
+            <div className="relative z-10 flex min-h-screen items-center justify-center px-5 pb-20 sm:px-8 sm:pb-24">
+                <div className="w-full max-w-[1300px] text-center text-white">
 
-                    {/* Subtitle */}
-                    <p className="font-itim text-[14px] sm:text-[16px]">
+                    {/* ================= SUBTITLE ================= */}
+                    <p
+                        className="
+                            font-itim
+                            text-[20px]
+                            leading-tight
+                            sm:text-[25px]
+                            md:text-[32px]
+                        "
+                    >
                         Temukan Resep Lezat untuk Setiap Hari
                     </p>
 
-                    {/* Title */}
-                    <h1 className="mt-2 font-itim text-[45px] leading-none sm:text-[55px] md:text-[65px]">
+                    {/* ================= TITLE ================= */}
+                    <h1
+                        className="
+                            mt-4
+                            font-itim
+                            text-[64px]
+                            leading-[0.95]
+                            sm:mt-5
+                            sm:text-[90px]
+                            md:text-[130px]
+                        "
+                    >
                         Food Recipe
                     </h1>
 
-                    {/* Description */}
-                    <p className="mx-auto mt-5 max-w-[650px] font-itim text-[14px] leading-[1.6] sm:text-[16px]">
+                    {/* ================= DESCRIPTION ================= */}
+                    <p
+                        className="
+                            mx-auto
+                            mt-6
+                            max-w-[350px]
+                            font-itim
+                            text-[18px]
+                            leading-[1.55]
+                            sm:mt-7
+                            sm:max-w-[750px]
+                            sm:text-[22px]
+                            md:mt-8
+                            md:max-w-[1100px]
+                            md:text-[29px]
+                            md:leading-[1.55]
+                        "
+                    >
                         Website resep makanan yang menghadirkan berbagai kreasi
-                        masakan lezat, mudah diikuti, dan cocok untuk semua kalangan.
-                        Temukan inspirasi memasak setiap hari dengan panduan lengkap
-                        dan langkah yang jelas.
+                        masakan lezat, mudah diikuti, dan cocok untuk semua
+                        kalangan. Temukan inspirasi memasak setiap hari dengan
+                        panduan lengkap dan langkah yang jelas.
                     </p>
 
                 </div>
